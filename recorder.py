@@ -23,12 +23,12 @@ stream = p.open(format=FORMAT,
 for word in WORDS:
     DIR = "data/train/" + word + "/"
     os.makedirs(DIR, exist_ok=True)
-    print("* * * " + word + " * * * ")
+    print("* * * Current word: " + word + " * * * ")
 
     while(True):
         key = input("n: for next word \n" +
                     "x: ends execution \n" +
-                    "other key to continue")
+                    "other key to continue\n")
         if key == "n":
             break
         elif key == "x":
@@ -36,6 +36,7 @@ for word in WORDS:
             p.terminate()
             exit()
 
+        print("*** Recording for 2 seconds, please say " + word)
         frames = []
         output_filename = ''.join(random.choices(
             string.ascii_lowercase, k=5)) + ".wav"
@@ -48,7 +49,7 @@ for word in WORDS:
 
         stream.stop_stream()
 
-        print("Saving " + DIR + output_filename)
+        print("*** Saving " + DIR + output_filename)
         wf = wave.open(DIR + output_filename, 'wb')
         wf.setnchannels(CHANNELS)
         wf.setsampwidth(p.get_sample_size(FORMAT))
@@ -60,3 +61,5 @@ for word in WORDS:
 
 stream.close()
 p.terminate()
+
+print("Ending program, recordings saved to data/train")
